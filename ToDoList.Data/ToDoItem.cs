@@ -12,12 +12,14 @@ namespace ToDoList.Data
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsCompleted { get; set; }
+        public DateTime DateCreated { get; set; }
         public ToDoItem() { }
         public ToDoItem(string name, string description)
         {
             Name = name;
             Description = description;
             IsCompleted = false;
+            DateCreated = DateTime.Now.ToUniversalTime();
         }
     }
 }

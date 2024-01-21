@@ -14,7 +14,7 @@ namespace ToDoList.Controllers
             _context = context;
         }
 
-        [HttpGet()]
+        [HttpGet("home")]
         public IActionResult GetTodoList()
         {
             var wrapper = new ListWrapper<ToDoItem>() { List = _context.items.ToArray() };
@@ -26,6 +26,14 @@ namespace ToDoList.Controllers
         {
             ToDoItem todo = new ToDoItem(name, description);
             _context.items.Add(todo);
+            _context.SaveChanges();
+            return new OkResult();
+        }
+
+        [HttpPost("check")]
+        public IActionResult CheckTodo(int id)
+        { 
+            _context.items.Where(x => x.Id == id).FirstOrDefault().IsCompleted = !(_context.items.Where(x => x.Id == id).FirstOrDefault().IsCompleted);
             _context.SaveChanges();
             return new OkResult();
         }
